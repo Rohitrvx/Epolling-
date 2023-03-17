@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}Admin Panel{% endblock title %}
+{% block body %}
+<section class="admin">
+    <h1>Admin Panel</h1>
+</section>
+<section class="center_1">
+<div class='container'>
+    <form action="" method ='POST'>
+        {% csrf_token %}
+
+        <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" name='globally' id="globally">
+            <label class="form-check-label" for="globally">Show results globally</label>
+        </div>
+        <button class="btn btn-success my-2" style="margin: 0px 70px;" type="submit">Apply</button>
+
+    </form>
+</div>
+</section>
+{% endblock body %}

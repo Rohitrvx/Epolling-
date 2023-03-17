@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Login{% endblock title %}
+{% block body %}
+<section class="body1">
+    <div class="container_404">
+        <div class="left_404">
+            <img src="{% static "polling/img/error.svg"%}" alt="">
+        </div>
+        <div class="right_404">
+            <h3>OH NO! <span>Error</span></h3>
+            <h1>Page Not Found</h1>
+            <p>It looks like you are not logged in, Kindly login and try again</p>
+            <div class="button_div">
+                <h6>Having trouble in logging in?</h6>
+                <a type="button" class="btn btn-success" href="{% url 'contact' %}">
+                Contact us
+                </a>
+                <a type="button" class="btn btn-success mx-2" href="{% url 'index' %}">
+                Home
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock body %}

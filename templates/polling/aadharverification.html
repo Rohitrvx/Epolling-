@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block title %}Aadhar verification{% endblock title %}
+{% block body %}
+<section class="otpsec">
+    <h1>Details Verification</h1>
+</section>
+<section class="center">
+<div class="left container my-3" >
+{% comment %} <h1 class='my-3'>Verify your Aadhar</h1>  {% endcomment %}
+<form action="{% url 'verify' %}" method="POST">{% csrf_token %}
+
+  <div class="mb-3">
+    <label for="aadharv" class="form-label">Aadhar</label>
+    <input type="number" class="form-control" name='aadharv' id="aadharv" placeholder='Please enter your Aadhar Number' Required>
+  </div>
+
+  <div class="mb-3">
+    <label for="voterv" class="form-label">Voter ID</label>
+    <input type="number" class="form-control" name='voterv' id="voterv" placeholder='Please enter your Voter ID' Required>
+  </div>
+
+    <button type="submit" class="btn btn-success">Generate OTP</button>
+
+</form>
+</div> 
+{% comment %} <section class="center"> {% endcomment %}
+<div class="right container my-3" > 
+<form action="{% url 'OTP' %}" method="POST">{% csrf_token %}
+
+  <div class="mb-3">
+    <label for="OTP" class="form-label">Enter the OTP</label>
+    <input type="number" class="form-control" name='OTP' id="OTP" placeholder='Enter the OTP sent on your Phone Number' Required>
+  </div>
+
+    <button type="submit" class="btn btn-success">Verify</button>
+
+</form>
+</div> 
+</section>
+{% comment %} </section> {% endcomment %}
+{% endblock body %}

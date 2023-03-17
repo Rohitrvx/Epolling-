@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}Aadhar Upload{% endblock title %}
+{% block body %}
+<section class="candidate">
+    <h1>Aadhar Upload</h1>
+</section>
+<section class="center">
+<div class="container my-3" >
+<form action="{% url 'aadhar' %}" method='post' enctype="multipart/form-data">{% csrf_token %}
+  
+  <div class="mb-3">
+  <label for="aadharphoto" class="form-label">Upload aadhar image</label>
+  <input class="form-control" type="file" id="aadharphoto" name="aadharphoto">
+  </div>
+
+  <button type="submit" class="btn btn-success">Submit</button>
+</form>
+</div>
+</section> 
+{% endblock body %}

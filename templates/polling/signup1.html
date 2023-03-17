@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block title %}Register{% endblock title %}
+{% block body %}
+<div class="container my-3" >
+<h1>signup</h1> 
+<form action="{% url 'register' %}" method="POST">{% csrf_token %}
+  <div class="mb-3">
+    <label for="username" class="form-label">Username</label>
+    <input type="text" class="form-control" name='username1' id="username" aria-describedby="username" placeholder='Enter your username' Required>
+  </div>
+
+  <div class="mb-3">
+    <label for="fname" class="form-label">First Name</label>
+    <input type="text" class="form-control" name='fname' id="fname" aria-describedby="fname" placeholder='First Name' Required>
+  </div>
+
+  <div class="mb-3">
+    <label for="lname" class="form-label">Last Name</label>
+    <input type="text" class="form-control" name='lname' id="lname" aria-describedby="lname" placeholder='Last Name' Required>
+  </div>
+
+  <div class="mb-3">
+    <label for="phone" class="form-label">Age</label>
+    <input type="number" class="form-control" name='age' id="age"  placeholder='How old are you ?' Required>
+  </div>
+
+  <div class="mb-3">
+    <label for="phone" class="form-label">Phone Number</label>
+    <input type="tel" class="form-control" name='phone' id="phone" placeholder='Your phone number' Required>
+    <div id="phonediv" class="form-text">We'll never share your phone number with anyone else.</div>
+  </div>
+
+  <div class="mb-3">
+    <label for="aadhar" class="form-label">Aadhar</label>
+    <input type="number" class="form-control" name='aadhar' id="aadhar" placeholder='Enter your Aadhar Card Number' Required>
+    <div id="aadhardiv" class="form-text">We'll never share your Aadhar details with anyone else.</div>
+  </div>
+  
+  <div class="mb-3">
+    <label for="voterid" class="form-label">Voter ID</label>
+    <input type="number" class="form-control" name='voterid' id="voterid" placeholder='Enter your voter ID' Required>
+  </div>
+
+  <div class="mb-3">
+    <label for="ward" class="form-label">Ward</label>
+    <input type="text" class="form-control" name='ward' id="ward" placeholder='Your ward number' Required>
+  </div>
+
+  {% comment %} <div class="mb-3">
+    <label for="email1" class="form-label">Email address</label>
+    <input type="email1" class="form-control" name='email1' id="email1" aria-describedby="emailHelp1" style='width:50%'Required>
+    <div id="emailHelp1" class="form-text">We'll never share your email with anyone else.</div>
+  </div> {% endcomment %}
+  
+  <div class="mb-3">
+    <label for="pswd" class="form-label">Create password</label>
+    <input type="password" name='pswd' class="form-control" id="pswd" placeholder='Create a strong password' Required>
+  </div>
+  
+  <div class="mb-3">
+    <label for="repswd" class="form-label">Re-type password</label>
+    <input type="password" name='repswd' class="form-control" id="repswd" placeholder='Please re-type your password' Required>
+  </div>
+
+  <button type="submit" class="btn btn-success">Submit</button>
+</form>
+</div> 
+{% endblock body %}

@@ -1,0 +1,267 @@
+{% load static %}
+<!doctype html>
+<html lang="en" dir="ltr">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+  <link rel="stylesheet" href="{% static 'polling/css/style.css' %}">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,500&display=swap" rel="stylesheet">
+  <style>
+    .contact{
+      background-image: linear-gradient(rgba(4,9,30,0.7),rgba(4,9,30,0.7)),url({% static "polling/img/contact.jpg"%});
+    }
+    .voting{
+      background-image: linear-gradient(rgba(4,9,30,0.7),rgba(4,9,30,0.7)),url({% static "polling/img/votingsection.jpg"%});
+    }
+    .admin{
+      background-image: linear-gradient(rgba(4,9,30,0.7),rgba(4,9,30,0.7)),url({% static "polling/img/admin.jpg"%});
+    }
+    .candidate{
+      background-image: linear-gradient(rgba(4,9,30,0.7),rgba(4,9,30,0.7)),url({% static "polling/img/candidate.jpg"%});
+    }
+    .home{
+      background-image: linear-gradient(rgba(4,9,30,0.7),rgba(4,9,30,0.7)),url({% static "polling/img/home.jpg"%});
+    }
+    .otpsec{
+      background-image: linear-gradient(rgba(4,9,30,0.7),rgba(4,9,30,0.7)),url({% static "polling/img/OTP.jpg"%});
+    }
+    
+  </style>
+  <title>{% block title %}{% endblock title %}</title>
+</head>
+<body>
+  {% url 'index' as index %}
+  {% url 'result' as result %}
+  {% url 'verify' as verify %}
+  {% url 'contact' as contact %}
+  {% url 'candidate' as candidate %}
+  {% url 'admin' as admin %}
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/"><img src="{% static "polling/img/logo3.png"%}" alt="E-poll" style="width: 50px;">E-poll</a>
+      
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse barnav" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link {% if request.path == index %}active{% endif %}" aria-current="page"
+              href="{% url 'index' %} ">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if request.path == result %}active{% endif %}" href="{% url 'result' %}">Results</a>
+          </li>
+          {%if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link {% if request.path == verify %}active{% endif %}" href="{% url 'verify' %}">Voting
+              panel</a>
+          </li>
+          {% endif %}
+          <li class="nav-item">
+            <a class="nav-link {% if request.path == contact %}active{% endif %}" href="{% url 'contact' %}">Contact
+              Us</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if request.path == candidate %}active{% endif %}"
+              href="{% url 'candidate' %}">Candidate registration</a>
+          </li>
+          {% if request.user.is_superuser %}
+          <li class="nav-item">
+            <a class="nav-link {% if request.path == admin %}active{% endif %}" href="{% url 'admin' %}">Admin panel</a>
+          </li>
+          {% endif %}
+        </ul>
+
+        <div style='margin-left: auto;' }>
+          {%if user.is_authenticated %}
+          Welcome,{{request.user}}
+
+          <a class="btn btn-outline-success mx-2" href="/logout" role="button">logout</a>
+          {% else %}
+          {% comment %} <a class="btn btn-outline-success mx-2" href="/login" role="button">Login</a> {% endcomment %}
+
+          <!-- Button trigger modal -->
+          <button type="button" class="btn btn-outline-success" data-bs-toggle="modal"
+            data-bs-target="#loginmodal">
+            Login
+          </button>
+
+          <!-- Modal -->
+          <div class="modal fade" id="loginmodal" tabindex="-1" aria-labelledby="loginmodal" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="loginmodal">Login Here</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <p style='font-size: x-large; text-align:center;'>Hey there, please enter your details to Continue :)
+                  </p>
+                  <form action="{% url 'login' %}" id='login' class='container' method='POST'>{% csrf_token %}
+                    <div class="mb-3">
+                      <label for="exampleInputEmail1" class="form-label">Username</label>
+                      <input type="text" name='login' class="form-control" id="exampleInputEmail1"
+                        aria-describedby="emailHelp" placeholder='Enter your username' Required>
+                      <div id="emailHelp" class="form-text">We'll never share your details with anyone else.</div>
+                    </div>
+                    <div class="mb-3">
+                      <label for="exampleInputPassword1" class="form-label">Password</label>
+                      <input type="password" name='password' class="form-control" id="exampleInputPassword1"
+                        placeholder='Password' Required>
+                    </div>
+                    <div class="g-recaptcha" data-sitekey="6LdFN5gbAAAAAOF883g30hPt9JGy16S2vOpxWkze" style="margin-bottom: 6px;" Required></div>
+                    <button type="submit" class="btn btn-success">login</button>
+                  </form>
+                </div>
+                 <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div> 
+              </div>
+            </div>
+          </div>
+
+          {% comment %} <a class="btn btn-outline-success" href="/register" role="button">Signup</a> {% endcomment %}
+          <button type="button" class="btn btn-outline-success mx-2" data-bs-toggle="modal"
+            data-bs-target="#signupmodal">
+            Sign Up
+          </button>
+
+          <!-- Modal -->
+          <div class="modal fade" id="signupmodal" tabindex="-1" aria-labelledby="signupmodal" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="signupmodal">Signup Here</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <form action="{% url 'register' %}" method="POST">{% csrf_token %}
+                    <div class="mb-3">
+                      <label for="username" class="form-label">Username</label>
+                      <input type="text" class="form-control" name='username1' id="username" aria-describedby="username"
+                        placeholder='> 6 characters,no special character' Required>
+                    </div>
+
+                    <div class="mb-3">
+                      <label for="fname" class="form-label">First Name</label>
+                      <input type="text" class="form-control" name='fname' id="fname" aria-describedby="fname"
+                        placeholder='First Name' Required>
+                    </div>
+
+                    <div class="mb-3">
+                      <label for="lname" class="form-label">Last Name</label>
+                      <input type="text" class="form-control" name='lname' id="lname" aria-describedby="lname"
+                        placeholder='Last Name' Required>
+                    </div>
+
+                    <div class="mb-3">
+                      <label for="phone" class="form-label">Age</label>
+                      <input type="number" class="form-control" name='age' id="age" placeholder='How old are you ?'
+                        Required>
+                    </div>
+
+                    <div class="mb-3">
+                      <label for="phone" class="form-label">Phone Number</label>
+                      <input type="tel" class="form-control" name='phone' id="phone" placeholder='only 10 digits without(0 or +91)'
+                        Required>
+                      <div id="phonediv" class="form-text">We'll never share your phone number with anyone else.</div>
+                    </div>
+
+                    <div class="mb-3">
+                      <label for="aadhar" class="form-label">Aadhar</label>
+                      <input type="number" class="form-control" name='aadhar' id="aadhar"
+                        placeholder='must be of 12 digits' Required>
+                      <div id="aadhardiv" class="form-text">We'll never share your Aadhar details with anyone else.
+                      </div>
+                    </div>
+
+                    <div class="mb-3">
+                      <label for="voterid" class="form-label">Voter ID</label>
+                      <input type="number" class="form-control" name='voterid' id="voterid"
+                        placeholder='must be of 10 digits' Required>
+                    </div>
+
+                    <div class="mb-3">
+                      <label for="ward" class="form-label">Ward</label>
+                      <input type="text" class="form-control" name='ward' id="ward" placeholder='Your ward number'
+                        Required>
+                    </div>
+
+                    <div class="mb-3">
+                      <label for="pswd" class="form-label">Create password</label>
+                      <input type="password" name='pswd' class="form-control" id="pswd"
+                        placeholder='Create a strong password' Required>
+                    </div>
+
+                    <div class="mb-3">
+                      <label for="repswd" class="form-label">Re-type password</label>
+                      <input type="password" name='repswd' class="form-control" id="repswd"
+                        placeholder='Please re-type your password' Required>
+                    </div>
+                    <div class="g-recaptcha" data-sitekey="6LdFN5gbAAAAAOF883g30hPt9JGy16S2vOpxWkze" style="margin-bottom: 6px;"></div>
+                    <button type="submit" class="btn btn-success">Submit</button>
+                  </form>
+                </div>
+                 <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endif %}
+          
+          {% comment %} </form> {% endcomment %}
+        </div>
+      </div>
+    </div>
+  </nav>
+  {% for message in messages %}
+  <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert" style="margin-bottom: 0;">
+    <strong>Message: </strong> {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  {% endfor %}
+  </div>
+  {% block body %}{% endblock body %}
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+    crossorigin="anonymous"></script>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <script type="text/javascript">
+    function preback(){window.history.forward();}
+    setTimeout("preback()",0)
+    window.onunload=function(){null};
+  </script>
+<footer class="footer">
+	<h4>About us</h4>
+	  We aim to make data simple for enterprises across the globe and propel them in their innovation journeys.<br>
+		Our mission is to make data simple and easy to understand for all organizations.
+	</p>
+	<div class="icons">
+		<a class="fa fa-facebook" href="#"></a>
+		<a class="fa fa-twitter" href="#"></a>
+		<a class="fa fa-instagram" href="#"></a>
+		<a class="fa fa-linkedin" href="#"></a>
+		<a class="fa fa-youtube-play" href="#"></a>
+
+	</div>
+	<p>Made with <i class="fa fa-heart-o"></i> in India</p>
+  <p>Copyright <i class="fa fa-copyright"></i> 2021 <a href="#" style="color: black;
+    text-decoration: none;"> PCE</a></p>
+</footer>
+</body>
+
+
+</html>

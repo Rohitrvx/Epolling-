@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %}Contact Us{% endblock title %}
+{% block body %}
+<section class="contact">
+    <h1>Contact Us</h1>
+</section>
+<section class="contact2 container my-3" >
+  <div class="row" style="margin-top: 50px;">
+      <div class="column">
+          <div>
+              <i class="fa fa-home"></i>
+              <span><h5>7th floor Corporate Tower JLN Marg,<br>Near Jawahar Circle, Malviya Nagar,<br>Jaipur, Rajasthan 302017</h5></span>
+          </div>
+          <div>
+              <i class="fa fa-phone"></i>
+              <span><h5>0141 470 0658</h5></span>
+          </div>
+          <div>
+              <i class="fa fa-envelope-o"></i>
+              <span><h5>epoll@epoll.celebal.in</h5></span>
+          </div>
+
+      </div>
+      <div class="column">
+      <form action="{% url 'contact' %}" method='post'>{% csrf_token %}
+
+          <input type="text"  name='name' id="name" aria-describedby="name" placeholder='Enter your name'>
+
+          <input type="email"  name='email' id="email" aria-describedby="emailHelp" placeholder='Enter your E-mail address'>
+        
+          <input type="phone"  name='phone' id="phone" placeholder='Enter your phone number'>
+      
+          <textarea name="desc" id="desc" cols="30" rows="10" style="height:132px;" placeholder='Describe your issue'></textarea>
+        
+          <button type="submit" class="btn btn-success">Submit</button>
+      </form>
+      </div>
+  </div>
+</section> 
+{% endblock body %}
